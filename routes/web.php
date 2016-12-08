@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('dashboard');
 });
 
 //AuthController Routes
@@ -29,4 +29,22 @@ Route::group(['middleware' => 'authcheck'], function () {
 	// DashboardController Routes
 	Route::get('dashboard', 'DashboardController@getIndex');
 	// End of DashboardController Routes
+
+	// ProjectController Routes
+	Route::get('project', 'ProjectController@getIndex');
+	Route::get('project/dashboard/{id}', 'ProjectController@getDashboard');
+	Route::post('project/edit', 'ProjectController@postEdit');
+	Route::get('project/edit', 'ProjectController@getEdit');
+	Route::post('project/edit/{id}', 'ProjectController@postEdit');
+	Route::get('project/edit/{id}', 'ProjectController@getEdit');
+	// End of ProjectController Routes
+
+	// TaskController Routes
+	Route::get('task', 'TaskController@getIndex');
+	Route::post('task/edit', 'TaskController@postEdit');
+	Route::get('task/edit', 'TaskController@getEdit');
+	Route::post('task/edit/{id}', 'TaskController@postEdit');
+	Route::get('task/edit/{id}', 'TaskController@getEdit');
+	// End of TaskController Routes
+
 });
