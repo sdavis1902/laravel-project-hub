@@ -1,6 +1,11 @@
 @extends('layouts.nopanel')
 
 @section('content')
+	@if( $new )
+		<div class="row">
+			There are no users yet, whatever credentials you input will be used to create the first user and log you in as them.
+		</div>
+	@endif
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
 			<div class="login-panel panel panel-default">

@@ -16,10 +16,20 @@ class InitialTables extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name');
+			$table->enum('status', ['Backlog','Active','Done'])->default('Active');
             $table->text('description');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users');
             $table->date('due_date');
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->engine = 'InnoDB';
+        });
+
+        Schema::create('task_states', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
 
@@ -34,6 +44,8 @@ class InitialTables extends Migration
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('projects');
+			$table->integer('state_id')->unsigned();
+			$table->foreign('state_id')->references('id')->on('task_states');
             $table->date('due_date');
             $table->timestamps();
             $table->softDeletes();

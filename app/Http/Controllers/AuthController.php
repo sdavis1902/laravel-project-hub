@@ -29,6 +29,10 @@ class AuthController extends Controller {
             'password' => $request->input('password')
         ];
 
+		if( !User::get()->count() ){// no users, make this the first user
+			$user = Sentinel::registerAndActivate($credentials);
+		}
+
         try{
             $user = Sentinel::authenticate($credentials);
         }catch(\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e){
@@ -43,7 +47,8 @@ class AuthController extends Controller {
     }
 
 	public function getLogin(){
-        return view('auth.login');
+		$new = User::get()->count() ? 0:1;
+        return view('auth.login', ['new' => $new]);
     }
 
     public function getLogout(){

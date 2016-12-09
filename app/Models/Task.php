@@ -18,4 +18,8 @@ class Task extends Model {
     public function project(){
         return $this->hasOne('App\Models\Project');
     }
+
+    public function state(){
+        return $this->hasOne('App\Models\TaskState');
+    }
 }

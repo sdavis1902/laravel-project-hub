@@ -23,7 +23,7 @@
     <!-- Custom Fonts -->
     <link href="{{ url('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
-	@section('additionalcss')
+	@section('pagecss')
 	@show
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -372,10 +372,7 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid">
-				@yield('content')
-            </div>
-            <!-- /.container-fluid -->
+			@yield('content')
         </div>
         <!-- /#page-wrapper -->
 
@@ -394,7 +391,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="{{ url('assets/js/sb-admin-2.js') }}"></script>
 
-	@section('additionaljs')
+	@section('pagejs')
 	@show
 </body>
 
