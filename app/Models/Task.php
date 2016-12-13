@@ -12,14 +12,14 @@ class Task extends Model {
     protected $dates = ['deleted_at'];
 
     public function user(){
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function project(){
-        return $this->hasOne('App\Models\Project');
+        return $this->belongsTo('App\Models\Project');
     }
 
     public function state(){
-        return $this->hasOne('App\Models\TaskState');
+        return $this->belongsTo('App\Models\TaskState');
     }
 }

@@ -40,11 +40,11 @@ Route::group(['middleware' => 'authcheck'], function () {
 	// End of ProjectController Routes
 
 	// TaskController Routes
-	Route::get('task', 'TaskController@getIndex');
 	Route::post('task/edit', 'TaskController@postEdit');
 	Route::get('task/edit', 'TaskController@getEdit');
 	Route::post('task/edit/{id}', 'TaskController@postEdit');
 	Route::get('task/edit/{id}', 'TaskController@getEdit');
+	Route::get('task/{id}', 'TaskController@getIndex');
 	// End of TaskController Routes
 
 });
