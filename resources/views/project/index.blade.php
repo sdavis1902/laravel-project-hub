@@ -18,7 +18,7 @@
 @section('content')
 	<div class="row">
         <div class="col-lg-12">
-			<h1 class="page-header">Tables</h1>
+			<h1 class="page-header">Projects List</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -26,9 +26,6 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					DataTables Advanced Tables
-				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table width="100%" class="table table-striped table-bordered table-hover" id="datatables-projects">
@@ -43,7 +40,7 @@
 						<tbody>
 							@foreach($projects as $project)
 								<tr class="odd gradeX">
-									<td>{{ $project->id }}</td>
+									<td><a href="{{ url('project/edit/'.$project->id) }}">{{ $project->id }}</a></td>
 									<td>{{ $project->name }}</td>
 									<td>{{ $project->status }}</td>
 									<td>{{ $project->user->last_name }}, {{ $project->user->first_name }}</td>

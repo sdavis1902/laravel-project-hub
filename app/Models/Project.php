@@ -12,7 +12,7 @@ class Project extends Model {
     protected $dates = ['deleted_at'];
 
     public function user(){
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function tasks(){
