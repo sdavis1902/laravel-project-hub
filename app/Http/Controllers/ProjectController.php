@@ -63,4 +63,28 @@ class ProjectController extends Controller {
 			'statuses' => $statuses
 		]);
 	}
+
+	public function getDashboard($id){
+
+		return view('project.dashboard');
+	}
+
+	public function postSaveDashboardLocations(Request $request){
+		$grids = $request->input('grid_data');
+
+        $user = Sentinel::getUser();
+        UserDashboard::where('user_id', '=', $user->id)->delete();
+        foreach( $grids as $grid ){
+            $ng = new UserDashboard();
+            $ng->user_id = $user->id;
+            $ng->key = $grid['id'];
+            $ng->row = $grid['y'];
+            $ng->col = $grid['x'];
+            $ng->height = $grid['height'];
+            $ng->width = $grid['width'];
+            $ng->save();
+        }
+
+        return ['status' => 'success'];
+	}
 }

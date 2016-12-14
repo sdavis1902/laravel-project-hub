@@ -33,6 +33,7 @@ Route::group(['middleware' => 'authcheck'], function () {
 	// ProjectController Routes
 	Route::get('project', 'ProjectController@getIndex');
 	Route::get('project/dashboard/{id}', 'ProjectController@getDashboard');
+	Route::post('project/save-dashboard-locations', 'ProjectController@postSaveDashboardLocations');
 	Route::post('project/edit', 'ProjectController@postEdit');
 	Route::get('project/edit', 'ProjectController@getEdit');
 	Route::post('project/edit/{id}', 'ProjectController@postEdit');
