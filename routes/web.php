@@ -51,7 +51,3 @@ Route::group(['middleware' => 'authcheck'], function () {
 	// End of TaskController Routes
 
 });
-
-// webhook for bitbucket
-Route::get('hook/bitbucket', 'TaskController@hookBitbucket');
-// end webhook for bitbucket

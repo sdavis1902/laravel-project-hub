@@ -16,6 +16,7 @@ use App\Models\Task;
 use App\Models\TaskComment;
 use App\Models\TaskState;
 use App\Models\User;
+use App\Models\UserBitbucketUsername;
 
 class TaskController extends Controller {
 
@@ -40,7 +41,7 @@ class TaskController extends Controller {
 
         if( $id ){
             $task = Task::find($id);
-            if( !$project ) return redirect('project')->withMessage('Could not find task with the provided id');
+            if( !$task ) return redirect('project')->withMessage('Could not find task with the provided id');
         }else{
             $task = new Task;
         }
@@ -98,6 +99,32 @@ class TaskController extends Controller {
 	}
 
 	public function hookBitbucket(Request $request){
-		return $request->all();
+		$changes = $request->input('push.changes');
+		foreach( $changes as $change ){
+			foreach( $change['commits'] as $commit ){
+				$bbusername = $commit['author']['user']['username'];
+				$bbcommiturl = $commit['links']['html']['href'];
+				$bbcommithash = $commit['hash'];
+				$bbcomment = $commit['message'];
+				if( preg_match('/sdh-(\d+)/', $bbcomment, $matches) ){
+					array_shift($matches);
+					foreach( $matches as $match ){
+						$id = $match;
+						$task = Task::find($id);
+						if( !$task ) continue;
+
+						// we have a task, lets construct our comment
+						$bituser = UserBitbucketUsername::where('username', '=', $bbusername)->first();
+						if( !$bituser ) continue; // could not find user, skip
+
+						$comment = new TaskComment;
+						$comment->user_id = $bituser->user_id;
+						$comment->task_id = $task->id;
+						$comment->comment = "$bbcomment\n<a target=\"_blank\" href=\"$bbcommiturl\">$bbcommithash</a>";
+						$comment->save();
+					}
+				}
+			}
+		}
 	}
 }
