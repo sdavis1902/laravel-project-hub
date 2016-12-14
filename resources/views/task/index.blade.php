@@ -35,6 +35,7 @@
 								<th>Name</th>
 								<th>Status</th>
 								<th>Assigned To</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -44,6 +45,7 @@
 									<td>{{ $task->name }}</td>
 									<td>{{ $task->state->name }}</td>
 									<td>{{ $task->user->last_name }}, {{ $task->user->first_name }}</td>
+									<td><a href="{{ url('task/view/'.$task->id) }}">View</a></td>
 								</tr>
 							@endforeach
 						</tbody>

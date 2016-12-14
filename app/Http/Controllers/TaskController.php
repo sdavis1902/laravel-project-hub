@@ -12,7 +12,10 @@ use Reminder;
 use Mail;
 
 use App\Models\Project;
+use App\Models\Task;
+use App\Models\TaskComment;
 use App\Models\TaskState;
+use App\Models\User;
 
 class TaskController extends Controller {
 
@@ -68,4 +71,33 @@ class TaskController extends Controller {
 		]);
 	}
 
+	public function postView(Request $request, $id){
+		$task = Task::find($id);
+		if( !$task ) return redirect('project')->withMessage('Could not find task');
+
+		if( !$request->input('comment') ) return redirect('task/view/'.$id);
+
+		$user = Sentinel::getUser();
+
+		$comment = new TaskComment;
+		$comment->user_id = $user->id;
+		$comment->task_id = $task->id;
+		$comment->comment = $request->input('comment');
+		$comment->save();
+
+		return redirect('task/view/'.$task->id)->withMessage('Comment added to task');
+	}
+
+	public function getView($id){
+		$task = Task::find($id);
+		if( !$task ) return redirect('project')->withMessage('could not find task');
+
+		return view('task.view', [
+			'task'        => $task
+		]);
+	}
+
+	public function hookBitbucket(Request $request){
+		return $request->all();
+	}
 }

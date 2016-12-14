@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
         <div claass="col-lg-12">
-			<h1 class="page-header">{{ $project ? 'Edit':'New' }} Task</h1>
+			<h1 class="page-header">{{ $task ? 'Edit':'New' }} Task</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>

@@ -45,7 +45,13 @@ Route::group(['middleware' => 'authcheck'], function () {
 	Route::get('task/edit', 'TaskController@getEdit');
 	Route::post('task/edit/{id}', 'TaskController@postEdit');
 	Route::get('task/edit/{id}', 'TaskController@getEdit');
+	Route::post('task/view/{id}', 'TaskController@postView');
+	Route::get('task/view/{id}', 'TaskController@getView');
 	Route::get('task/{id}', 'TaskController@getIndex');
 	// End of TaskController Routes
 
 });
+
+// webhook for bitbucket
+Route::get('hook/bitbucket', 'TaskController@hookBitbucket');
+// end webhook for bitbucket

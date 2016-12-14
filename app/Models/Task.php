@@ -22,4 +22,8 @@ class Task extends Model {
     public function state(){
         return $this->belongsTo('App\Models\TaskState');
     }
+
+	public function comments(){
+		return $this->hasMany('App\Models\TaskComment');
+	}
 }
