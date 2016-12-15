@@ -90,7 +90,10 @@ class TaskController extends Controller {
 	}
 
 	public function getView($id){
-		$task = Task::find($id);
+		$task = Task::with(['comments' => function($q){
+			$q->orderBy('created_at', 'desc');
+		}])->find($id);
+
 		if( !$task ) return redirect('project')->withMessage('could not find task');
 
 		return view('task.view', [
