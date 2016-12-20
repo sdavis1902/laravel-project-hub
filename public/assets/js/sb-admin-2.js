@@ -5,6 +5,12 @@
  */
 $(function() {
     $('#side-menu').metisMenu();
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
 });
 
 //Loads the correct sidebar on window load,

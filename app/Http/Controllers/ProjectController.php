@@ -13,6 +13,8 @@ use Mail;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Task;
+use App\Models\TaskState;
 
 class ProjectController extends Controller {
 
@@ -65,25 +67,35 @@ class ProjectController extends Controller {
 	}
 
 	public function getDashboard($id){
+		$project = Project::find($id);
+		$states = TaskState::orderBy('priority','asc')->get();
 
-		return view('project.dashboard');
+		foreach( $states as $key => $state ){
+			$states[$key]->dash_tasks = Task::where('project_id', '=', $project->id)->where('state_id', '=', $state->id)->orderBy('priority', 'asc')->get();
+		}
+
+		$width = floor(100/$states->count())-1;
+
+		return view('project.dashboard', [
+			'project' => $project,
+			'states' => $states,
+			'width' => $width
+		]);
 	}
 
-	public function postSaveDashboardLocations(Request $request){
-		$grids = $request->input('grid_data');
+	public function postDashboardUpdate(Request $request){
+		$tasks = $request->input('tasks');
 
-        $user = Sentinel::getUser();
-        UserDashboard::where('user_id', '=', $user->id)->delete();
-        foreach( $grids as $grid ){
-            $ng = new UserDashboard();
-            $ng->user_id = $user->id;
-            $ng->key = $grid['id'];
-            $ng->row = $grid['y'];
-            $ng->col = $grid['x'];
-            $ng->height = $grid['height'];
-            $ng->width = $grid['width'];
-            $ng->save();
-        }
+		if( !$tasks ) return ['status' => 'success'];
+
+		foreach( $tasks as $task ){
+			$t = Task::find($task['task_id']);
+			if( !$t ) continue;
+
+			$t->state_id = $task['state_id'];
+			$t->priority = $task['priority'];
+			$t->save();
+		}
 
         return ['status' => 'success'];
 	}

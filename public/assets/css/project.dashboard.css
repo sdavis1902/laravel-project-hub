@@ -1,0 +1,11 @@
+.dashcontainer {
+	float:left;
+	clear: right;
+	margin:10px;
+}
+.sortable {
+	list-style-type: none;
+	margin:0; padding:2px;
+	min-height:30px;
+	border-radius: 5px;
+}

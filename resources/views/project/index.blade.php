@@ -36,6 +36,7 @@
 								<th>Status</th>
 								<th>Assigned To</th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,6 +46,7 @@
 									<td>{{ $project->name }}</td>
 									<td>{{ $project->status }}</td>
 									<td>{{ $project->user->last_name }}, {{ $project->user->first_name }}</td>
+									<td><a href="{{ url('project/dashboard/'.$project->id) }}">Dashboard</a></td>
 									<td><a href="{{ url('task/'.$project->id) }}">Tasks</a></td>
 								</tr>
 							@endforeach
