@@ -74,7 +74,7 @@ class ProjectController extends Controller {
 			$states[$key]->dash_tasks = Task::where('project_id', '=', $project->id)->where('state_id', '=', $state->id)->orderBy('priority', 'asc')->get();
 		}
 
-		$width = floor(100/$states->count())-1;
+		$width = floor(100/$states->count());
 
 		return view('project.dashboard', [
 			'project' => $project,
