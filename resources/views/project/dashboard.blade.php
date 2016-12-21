@@ -21,20 +21,20 @@
 	<div class="row">
         <div claass="col-lg-12">
 			@foreach( $states as $state )
-				<div class="panel panel-default dashcontainer" style="width:{{ $width }}%">
+				<div class="panel panel-default dashcontainer" style="width:{{ $width }}%;">
 					<div class="panel-heading">
 						{{ $state->name }}
 					</div>
-					<div class="panel-body">
+					<div class="panel-body state-body">
 						<ul class="sortable connectedSortable" data-state-id="{{ $state->id }}">
 							@foreach( $state->dash_tasks as $task )
 								<li class="card" data-task-id="{{ $task->id }}">
-									<div class="panel panel-default">
-										<div class="panel-body">
+									<div class="panel panel-default card-panel">
+										<div class="panel-body card-panel-body">
 											#{{ $task->id }} {{ $task->name }}<br />
-										</div>
-										<div class="panel-footer">
-											<a href="{{ url('task/view/'.$task->id) }}">View</a>
+											<div class="card-links">
+												<a href="{{ url('task/view/'.$task->id) }}">View</a>
+											</div>
 										</div>
 									</div>
 								</li>
