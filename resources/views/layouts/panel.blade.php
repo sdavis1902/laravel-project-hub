@@ -24,6 +24,10 @@
     <!-- Custom Fonts -->
     <link href="{{ url('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
+	<!-- Messanger for user prompts -->
+    <link href="{{ url('assets/plugins/messenger/css/messenger.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url('assets/plugins/messenger/css/messenger-theme-future.css') }}" rel="stylesheet" type="text/css">
+
 	@section('pagecss')
 	@show
 
@@ -126,6 +130,13 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{{ url('assets/plugins/metisMenu/metisMenu.min.js') }}"></script>
+
+	<!-- Messanger for user prompts -->
+    <script src="{{ url('assets/plugins/messenger/js/messenger.js') }}"></script>
+    <script src="{{ url('assets/plugins/messenger/js/messenger-theme-future.js') }}"></script>
+
+	<!-- bootbox -->
+    <script src="{{ URL::asset('assets/plugins/bootbox.min.js') }}" type="text/javascript"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="{{ url('assets/js/sb-admin-2.js') }}"></script>

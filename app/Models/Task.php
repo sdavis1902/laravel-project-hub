@@ -26,4 +26,8 @@ class Task extends Model {
 	public function comments(){
 		return $this->hasMany('App\Models\TaskComment');
 	}
+
+	public function files(){
+		return $this->hasMany('App\Models\TaskFile');
+	}
 }

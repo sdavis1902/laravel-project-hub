@@ -39,6 +39,21 @@
 						<dt>Description</dt>
 						<dd>{!! nl2br($task->description) !!}</dd>
 					</dl>
+					<dl>
+						<dt>Files</dt>
+						<dd>
+							@foreach( $task->files as $file )
+								<div class="row">
+									<div class="col-md-4">
+										<a target="_blank" href="{{ url($file->url) }}">{{ $file->name }}</a>
+									</div>
+									<div class="col-md-4">
+										{{ $file->description }}
+									</div>
+								</div>
+							@endforeach
+						</dd>
+					</dl>
 				</div>
 			</div>
         </div>

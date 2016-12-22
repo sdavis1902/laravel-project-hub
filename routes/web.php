@@ -26,6 +26,21 @@ Route::get('auth/forgot-password-confirmation', 'AuthController@getForgotPasswor
 // End of AuthController Routes
 
 Route::group(['middleware' => 'authcheck'], function () {
+	Route::get('task_files/{filename}', function ($filename){
+		$path = storage_path('app') . '/task_files/' . $filename;
+
+		if(!File::exists($path)) abort(404);
+
+		$file = File::get($path);
+		$type = File::mimeType($path);
+
+		$response = Response::make($file, 200);
+		$response->header("Content-Type", $type);
+
+		return $response;
+	});
+
+
 	// DashboardController Routes
 	Route::get('dashboard', 'DashboardController@getIndex');
 	// End of DashboardController Routes
@@ -49,6 +64,9 @@ Route::group(['middleware' => 'authcheck'], function () {
 	Route::post('task/view/{id}', 'TaskController@postView');
 	Route::get('task/view/{id}', 'TaskController@getView');
 	Route::get('task/{id}', 'TaskController@getIndex');
+	Route::post('task/file-upload/{id}', 'TaskController@postFileUpload');
+	Route::post('task/file-delete/{id}', 'TaskController@postFileDelete');
+	Route::post('task/file-change-field/{id}', 'TaskController@postFileChangeField');
 	// End of TaskController Routes
 
 });
