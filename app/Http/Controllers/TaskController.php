@@ -45,6 +45,7 @@ class TaskController extends Controller {
             if( !$task ) return redirect('project')->withMessage('Could not find task with the provided id');
         }else{
             $task = new Task;
+			$task->priority = 999;
         }
 
         $task->name = $request->input('name');
@@ -53,7 +54,6 @@ class TaskController extends Controller {
 		$task->due_date = date('Y-m-d H:i:s', time()+60*60*24*7);
 		$task->state_id = $request->input('state_id');
 		$task->project_id = $request->input('project_id');
-		$task->priority = 999;
         $task->save();
 
         $message = $id ? 'Task has been updated' : 'Task has been created';
