@@ -71,7 +71,11 @@ class ProjectController extends Controller {
 		$states = TaskState::orderBy('priority','asc')->get();
 
 		foreach( $states as $key => $state ){
-			$states[$key]->dash_tasks = Task::where('project_id', '=', $project->id)->where('state_id', '=', $state->id)->orderBy('priority', 'asc')->get();
+			$tasks = Task::where('project_id', '=', $project->id)->where('state_id', '=', $state->id)->orderBy('priority', 'asc');
+			if( $state->name == 'Done' ){
+				$tasks = $tasks->where('updated_at', '>', date('Y-m-d H:i:s', time()-(60*60*24*6)));
+			}
+			$states[$key]->dash_tasks = $tasks->get();
 		}
 
 		$width = floor(100/$states->count());
