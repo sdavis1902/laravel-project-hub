@@ -7,6 +7,7 @@
 
 @section('pagejs')
 	<script src="{{ URL::asset('assets/plugins/dropzone/dropzone.js') }}" type="text/javascript"></script>
+	<script src="{{ URL::asset('assets/plugins/dropzone/dropzone.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/js/task.edit.js') }}" type="text/javascript"></script>
 @endsection
 

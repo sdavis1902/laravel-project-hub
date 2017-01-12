@@ -52,29 +52,6 @@ class InitialTables extends Migration
 
             $table->engine = 'InnoDB';
         });
-
-        Schema::create('deployments', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->text('description');
-            $table->text('command');
-            $table->timestamps();
-            $table->softDeletes();
-
-            $table->engine = 'InnoDB';
-        });
-
-        Schema::create('deployment_runs', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-			$table->integer('deployment_id')->unsigned();
-			$table->foreign('deployment_id')->references('id')->on('deployments');
-            $table->string('status');
-            $table->text('logs');
-            $table->timestamps();
-            $table->softDeletes();
-
-            $table->engine = 'InnoDB';
-        });
     }
 
     /**
@@ -84,9 +61,8 @@ class InitialTables extends Migration
      */
     public function down()
     {
+        Schema::drop('task_states');
         Schema::drop('projects');
         Schema::drop('tasks');
-        Schema::drop('deployments');
-        Schema::drop('deployment_runs');
     }
 }

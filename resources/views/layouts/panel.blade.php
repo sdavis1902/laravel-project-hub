@@ -93,11 +93,15 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+						@foreach( $menu_projects as $project )
+	                        <li>
+		                        <a href="{{ url('project/dashboard/'.$project->id) }}"{!! request()->path() === 'project/dashboard/'.$project->id ?' class="active"':'' !!}>
+									<i class="fa fa-dashboard fa-fw"></i> {{ $project->name }}
+								</a>
+			                </li>
+						@endforeach
                         <li>
-                            <a href="{{ url('') }}"{!! request()->path() === ''?' class="active"':'' !!}><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('project') }}"{!! request()->path() === 'project'?' class="active"':'' !!}><i class="fa fa-dashboard fa-fw"></i> Projects</a>
+                            <a href="{{ url('project') }}"{!! request()->path() === 'project'?' class="active"':'' !!}><i class="fa fa-dashboard fa-fw"></i> Projects List</a>
                         </li>
                     </ul>
                 </div>

@@ -14,4 +14,8 @@ class Deployment extends Model {
     public function runs(){
         return $this->hasMany('App\Models\DeploymentRun');
     }
+
+    public function gruops(){
+        return $this->belongsTo('App\Models\DeploymentGroup');
+    }
 }

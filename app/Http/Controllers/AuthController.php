@@ -21,7 +21,7 @@ class AuthController extends Controller {
         ]);
 
         if ($v->fails()) {
-            return redirect('admin/auth/login')->with('message', 'Login error.  Please make sure that your account login information is correct and type in a valid captcyha code.');
+            return redirect('auth/login')->with('message', 'Login error.  Please make sure that your account login information is correct and type in a valid captcyha code.');
         }
 
         $credentials = [

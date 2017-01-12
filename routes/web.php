@@ -25,7 +25,7 @@ Route::post('auth/forgot-password-confirmation', 'AuthController@postForgotPassw
 Route::get('auth/forgot-password-confirmation', 'AuthController@getForgotPasswordConfirmation');
 // End of AuthController Routes
 
-Route::group(['middleware' => 'authcheck'], function () {
+Route::group(['middleware' => ['authcheck', 'globalviewshare']], function () {
 	Route::get('task_files/{filename}', function ($filename){
 		$path = storage_path('app') . '/task_files/' . $filename;
 
