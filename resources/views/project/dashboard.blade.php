@@ -12,6 +12,10 @@
 
 @section('content')
 	<div class="row">
+		<div class="pull-right" style="margin-top:40px;">
+			<a href="{{ url('project/edit/'.$project->id) }}" class="btn btn-success">Edit</a>
+		</div>
+
         <div claass="col-lg-12">
 			<h1 class="page-header">{{ $project->name }}</h1>
 		</div>
