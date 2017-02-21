@@ -179,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 		Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+		sdavis1902\LunanodeApiPhp\Laravel\LunanodeServiceProvider::class,
 
     ],
 
@@ -231,6 +232,7 @@ return [
 		'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
 		'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
 		'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+		'Lunanode' => sdavis1902\LunanodeApiPhp\Laravel\Lunanode::class,
     ],
 
 ];
