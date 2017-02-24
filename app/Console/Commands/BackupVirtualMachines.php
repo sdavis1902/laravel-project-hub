@@ -39,30 +39,28 @@ class BackupVirtualMachines extends Command
     public function handle()
     {
 
-        $result = Lunanode::request('vm', 'list');
-		$vms = $result['vms'];
+        $vms = Lunanode::request('vm', 'list');
 
 		$vmimages = [];
 
 		foreach($vms as $vm){
-			if( !isset( $vmimages[$vm['name']] ) ) $vmimages[$vm['name']] = [];
-			$name = date('M j Y').' '.$vm['name'];
+			if( !isset( $vmimages[$vm->name] ) ) $vmimages[$vm->name] = [];
+			$name = date('M j Y').' '.$vm->name;
 			$this->info("Creating new snapshot $name");
 			Lunanode::request('vm', 'snapshot', [
-				'vm_id' => $vm['vm_id'],
+				'vm_id' => $vm->vm_id,
 				'name'  => $name
 			]);
 		}
 		$this->info('backups complete');
 
 		$this->info('removing old images');
-		$result = Lunanode::request('image', 'list');
-		$images = $result['images'];
+		$images = Lunanode::request('image', 'list');
 
 		foreach($images as $image){
 			foreach($vms as $vm){
-				if( preg_match('/'.$vm['name'].'/', $image['name']) ){
-					$vmimages[$vm['name']][strtotime(str_replace($vm['name'], '', $image['name']))] = $image;
+				if( preg_match('/'.$vm->name.'/', $image->name) ){
+					$vmimages[$vm->name][strtotime(str_replace($vm->name, '', $image->name))] = $image;
 					break;
 				}
 			}
@@ -78,9 +76,9 @@ class BackupVirtualMachines extends Command
 
 			// loop and remove all older images
 			foreach( $images as $image ){
-				$this->info("Removing image ".$image['name']);
+				$this->info("Removing image ".$image->name);
 				Lunanode::request('image', 'delete', [
-					'image_id' => $image['image_id']
+					'image_id' => $image->image_id
 				]);
 			}
 		}
