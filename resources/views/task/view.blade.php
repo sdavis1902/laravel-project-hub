@@ -74,7 +74,7 @@
 									<div class="header">
 										<strong class="primary-font">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
 										<small class="pull-right text-muted">
-											<i class="fa fa-clock-o fa-fw"></i> {{ $comment->created_at }}
+											<i class="fa fa-clock-o fa-fw"></i> {{ $comment->created_at->timezone(\Config::get('app.output_timezone'))->toDayDateTimeString() }}
 										</small>
 									</div>
 									<p>
