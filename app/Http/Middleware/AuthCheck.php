@@ -21,7 +21,7 @@ class AuthCheck
             if( $request->ajax() ){
                 return response()->json('NOT LOGGED IN');
             }
-            return redirect('auth/login');
+            return redirect()->guest('auth/login');
         }
 
 		$user = Sentinel::getUser();
