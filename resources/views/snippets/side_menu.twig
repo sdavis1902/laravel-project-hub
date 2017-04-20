@@ -1,0 +1,13 @@
+{% for project in menu_projects %}
+	<li>
+		<a href="{{ url('project/dashboard/' ~ project.id) }}"{{ current_url == 'project/dashboard/' ~ project.id ?' class="active"':''|raw }}>
+			<i class="fa fa-dashboard fa-fw"></i> <span>{{ project.name }}</span>
+			<span class="pull-right-container">
+				<small class="label pull-right bg-green">{{ project.openTasks.count() }}</small>
+			</span>
+		</a>
+	</li>
+{% endfor %}
+<li>
+	<a href="{{ url('project') }}"{{ current_url == 'project'?' class="active"':''|raw }}><i class="fa fa-dashboard fa-fw"></i> Projects List</a>
+</li>

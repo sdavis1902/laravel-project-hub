@@ -1,0 +1,105 @@
+{% extends 'layouts.admin_main' %}
+
+{% block title %}
+	{{ task.name }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="pull-right" style="margin-top: -40px; margin-bottom: 0px; z-index: 1; position: relative;">
+			<a href="{{ url('project/dashboard/' ~ task.project.id) }}" class="btn btn-success">Back</a>
+			<a href="{{ url('task/edit/' ~ task.id) }}" class="btn btn-success">Edit</a>
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title">Task Details</h3>
+				</div>
+				<div class="box-body">
+                    <dl>
+						<dt>Project</dt>
+						<dd>{{ task.project.name }}</dd>
+					</dl>
+					<dl>
+						<dt>Assigned To</dt>
+						<dd>{{ task.user.first_name }} {{ task.user.last_name }}</dd>
+					</dl>
+					<dl>
+						<dt>Status</dt>
+						<dd>{{ task.state.name }}</dd>
+					</dl>
+					<dl>
+						<dt>Due Date</dt>
+						<dd>{{ task.due_date }}</dd>
+					</dl>
+					<dl>
+						<dt>Description</dt>
+						<dd>{{ task.description|raw|nl2br }}</dd>
+					</dl>
+					<dl>
+						<dt>Files</dt>
+						<dd>
+							{% for file in task.files %}
+								<div class="row">
+									<div class="col-md-4">
+										<a target="_blank" href="{{ url(file.url) }}">{{ file.name }}</a>
+									</div>
+									<div class="col-md-4">
+										{{ file.description }}
+									</div>
+								</div>
+							{% endfor %}
+						</dd>
+					</dl>
+				</div>
+			</div>
+        </div>
+		<div class="col-lg-6">
+			<div class="box">
+				<div class="box-header ui-sortable-handle" style="cursor: move;">
+					<i class="fa fa-comments-o"></i>
+
+					<h3 class="box-title">Comments</h3>
+
+				</div>
+				<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
+					<div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
+						{% for comment in task.comments %}
+						<!-- chat item -->
+							<div class="item">
+								<img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle">
+								<p class="message">
+									<a href="#" class="name">
+										<small class="text-muted pull-right">
+											<i class="fa fa-clock-o"></i> {{ comment.created_at.timezone(config_get('app.output_timezone')).toDayDateTimeString() }}
+										</small>
+										{{ comment.user.first_name }} {{ comment.user.last_name }}
+									</a>
+									{{ comment.comment|raw|nl2br }}
+								</p>
+							</div>
+							<!-- /.item -->
+						{% endfor %}
+					</div>
+					<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 25px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 224.82px;"></div>
+					<div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+				</div>
+				<!-- /.chat -->
+				<div class="box-footer">
+					<form role="form" method="POST">
+						<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
+						<div class="input-group">
+							<textarea class="form-control input-sm" name="comment"></textarea>
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

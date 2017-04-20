@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Sentinel;
 use App\Models\Project;
+use View;
 
 class GlobalViewShare
 {
@@ -18,7 +19,10 @@ class GlobalViewShare
     public function handle($request, Closure $next)
     {
 		$projects = Project::where('status', '=', 'Active')->get();
-		\View::share('menu_projects', $projects);
+		View::share('menu_projects', $projects);
+
+		$current_url = $request->path();
+		View::share('current_url', $current_url);
 
         return $next($request);
     }

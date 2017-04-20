@@ -18,4 +18,8 @@ class Project extends Model {
     public function tasks(){
         return $this->hasMany('App\Models\Task');
     }
+
+	public function openTasks(){
+        return $this->hasMany('App\Models\Task')->where('state_id', '<>', 6);
+	}
 }

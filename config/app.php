@@ -181,7 +181,7 @@ return [
 
 		Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 		sdavis1902\LunanodeApiPhp\Laravel\LunanodeServiceProvider::class,
-
+		TwigBridge\ServiceProvider::class,
     ],
 
     /*
@@ -234,6 +234,7 @@ return [
 		'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
 		'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 		'Lunanode' => sdavis1902\LunanodeApiPhp\Laravel\Lunanode::class,
+		'Twig' => TwigBridge\Facade\Twig::class,
     ],
 
 ];
