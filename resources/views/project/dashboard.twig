@@ -1,0 +1,53 @@
+{% extends 'layouts.admin_main' %}
+
+{% block pagecss %}
+	<link href="{{ asset('assets/plugins/jQueryUI/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+	<link href="{{ asset('assets/css/project.dashboard.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+{% endblock %}
+
+{% block pagejs %}
+    <script src="{{ asset('assets/plugins/jQueryUI/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/project.dashboard.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block title %}
+	{{ project.name }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+        <div claass="col-lg-12">
+			<div class="pull-right" style="margin-top: -40px; margin-bottom: 0px; z-index: 1; position: relative; padding-right: 45px;">
+				<a href="{{ url('project/edit/' ~ project.id) }}" class="btn btn-success">Edit</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+        <div claass="col-lg-12">
+			{% for state in states %}
+				<div class="panel panel-default dashcontainer" style="width:{{ width }}%;">
+					<div class="panel-heading">
+						{{ state.name }}
+					</div>
+					<div class="panel-body state-body">
+						<ul class="sortable connectedSortable" data-state-id="{{ state.id }}">
+							{% for task in state.dash_tasks %}
+								<li class="card" data-task-id="{{ task.id }}">
+									<div class="panel panel-default card-panel">
+										<div class="panel-body card-panel-body">
+											#{{ task.id }} {{ task.name }}<br />
+											<div class="card-links">
+												<a href="{{ url('task/view/' ~ task.id) }}">View</a>
+											</div>
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
