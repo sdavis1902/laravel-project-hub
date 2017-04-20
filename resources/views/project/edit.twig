@@ -1,0 +1,85 @@
+{% extends 'layouts.admin_main' %}
+
+{% block title %}
+	{{ project ? 'Edit':'New' }} Project
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="box">
+				<div class="box-header">
+					Project Details
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<form role="form" method="POST">
+							<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
+							<div class="col-lg-12">
+								<div class="form-group{{ errors.has('name') ? ' has-error':'' }}">
+									<label>Name</label>
+									<input name="name" class="form-control" value="{{ old('name') ? old('name') : (project) ? project.name:''}}">
+									{% if errors.has('name') %}
+										{% for error in errors.get('name') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('status') ? ' has-error':'' }}">
+									<label>Status</label>
+									<select name="status" class="form-control">
+										{% for status in statuses %}
+											<option{{ project and project.status == status ? ' selected':'' }} value="{{ status }}">{{ status }}</option>
+                                        {% endfor %}
+									</select>
+									{% if errors.has('status') %}
+										{% for error in errors.get('status') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('user_id') ? ' has-error':'' }}">
+									<label>Assigned To</label>
+									<select name="user_id" class="form-control">
+										{% for user in users %}
+											<option{{ project and project.user_id == user.id ? ' selected':'' }} value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                                        {% endfor %}
+									</select>
+									{% if errors.has('user_id') %}
+										{% for error in errors.get('user_id') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('description') ? ' has-error':'' }}">
+									<label>Description</label>
+									<textarea name="description" class="form-control" rows="3">{{ old('description') ? old('description') : (project) ? project.description:''}}</textarea>
+									{% if errors.has('description') %}
+										{% for error in errors.get('description') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<button type="submit" class="btn btn-default">Save</button>
+							</div>
+						</form>
+						<!-- /.col-lg-6 (nested) -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+{% endblock %}
