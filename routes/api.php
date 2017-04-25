@@ -14,5 +14,6 @@ use Illuminate\Http\Request;
 */
 
 // webhook for bitbucket
-Route::post('hook/bitbucket', 'TaskController@hookBitbucket');
+Route::post('hook/bitbucket', 'HookController@bitbucket');
+Route::post('hook/github', 'HookController@github');
 // end webhook for bitbucket
