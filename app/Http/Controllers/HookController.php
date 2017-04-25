@@ -18,6 +18,7 @@ use App\Models\TaskComment;
 use App\Models\TaskState;
 use App\Models\User;
 use App\Models\UserBitbucketUsername;
+use App\Models\UserGithubUsername;
 
 class HookController extends Controller {
 	public function bitbucket(Request $request){
@@ -61,7 +62,7 @@ class HookController extends Controller {
 			$ghcommithash = $commit['id'];
 			$ghcomment = $commit['message'];
 
-			if( preg_match('/sdh-(\d+)/', $bbcomment, $matches) ){
+			if( preg_match('/sdh-(\d+)/', $ghcomment, $matches) ){
 				array_shift($matches);
 				foreach( $matches as $match ){
 					$id = $match;
@@ -73,9 +74,9 @@ class HookController extends Controller {
 					if( !$gituser ) continue; // could not find user, skip
 
 					$comment = new TaskComment;
-					$comment->user_id = $bituser->user_id;
+					$comment->user_id = $gituser->user_id;
 					$comment->task_id = $task->id;
-					$comment->comment = "$bbcomment\n<a target=\"_blank\" href=\"$bbcommiturl\">$bbcommithash</a>";
+					$comment->comment = "$ghcomment\n<a target=\"_blank\" href=\"$ghcommiturl\">$ghcommithash</a>";
 					$comment->save();
 				}
 			}
