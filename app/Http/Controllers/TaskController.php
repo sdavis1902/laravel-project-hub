@@ -170,33 +170,17 @@ class TaskController extends Controller {
 		]);
 	}
 
-	public function hookBitbucket(Request $request){
-		$changes = $request->input('push.changes');
-		foreach( $changes as $change ){
-			foreach( $change['commits'] as $commit ){
-				$bbusername = $commit['author']['user']['username'];
-				$bbcommiturl = $commit['links']['html']['href'];
-				$bbcommithash = $commit['hash'];
-				$bbcomment = $commit['message'];
-				if( preg_match('/sdh-(\d+)/', $bbcomment, $matches) ){
-					array_shift($matches);
-					foreach( $matches as $match ){
-						$id = $match;
-						$task = Task::find($id);
-						if( !$task ) continue;
+	public function getSearch(Request $request){
+		$search = $request->get('q');
+		$tasks = [];
 
-						// we have a task, lets construct our comment
-						$bituser = UserBitbucketUsername::where('username', '=', $bbusername)->first();
-						if( !$bituser ) continue; // could not find user, skip
-
-						$comment = new TaskComment;
-						$comment->user_id = $bituser->user_id;
-						$comment->task_id = $task->id;
-						$comment->comment = "$bbcomment\n<a target=\"_blank\" href=\"$bbcommiturl\">$bbcommithash</a>";
-						$comment->save();
-					}
-				}
-			}
+		if( $search ){
+			$tasks = Task::search($search)->get();
+			$tasks->load('Project');
 		}
+
+		return view('task.search', [
+			'tasks' => $tasks
+		]);
 	}
 }

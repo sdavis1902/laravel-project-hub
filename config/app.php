@@ -182,6 +182,8 @@ return [
 		Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 		sdavis1902\LunanodeApiPhp\Laravel\LunanodeServiceProvider::class,
 		TwigBridge\ServiceProvider::class,
+		Laravel\Scout\ScoutServiceProvider::class,
+		ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
     ],
 
     /*

@@ -9,7 +9,8 @@
         "laravel/framework": "5.4.*",
         "cartalyst/sentinel": "2.0.*",
         "sdavis1902/lunanode-api-php": "^1.0",
-        "rcrowe/twigbridge": "^0.9.4"
+        "rcrowe/twigbridge": "^0.9.4",
+        "tamayo/laravel-scout-elastic": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

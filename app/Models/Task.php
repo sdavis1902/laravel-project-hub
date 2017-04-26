@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model {
 
     use SoftDeletes;
+	use Searchable;
 
     protected $dates = ['deleted_at'];
 

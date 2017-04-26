@@ -63,6 +63,7 @@ Route::group(['middleware' => ['authcheck', 'globalviewshare']], function () {
 	Route::get('task/edit/{id}', 'TaskController@getEdit');
 	Route::post('task/view/{id}', 'TaskController@postView');
 	Route::get('task/view/{id}', 'TaskController@getView');
+	Route::get('task/search', 'TaskController@getSearch');
 	Route::get('task/{id}', 'TaskController@getIndex');
 	Route::post('task/file-upload/{id}', 'TaskController@postFileUpload');
 	Route::post('task/file-delete/{id}', 'TaskController@postFileDelete');

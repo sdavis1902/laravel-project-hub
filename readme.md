@@ -10,6 +10,8 @@ It supports webhooks for both github and bitbucket.  You just create the webhook
 
 You may notice that the views are all using twig rather than blade.  I'm using https://github.com/rcrowe/TwigBridge .  Why?  I like Twig.
 
+The search box searches tasks using Laravel Scout and elasticsearch.
+
 As I said, it's a bit incomplete in a few areas, but meets all my needs.  If someone else actually wants to use this and needs some of these things completed, feel free to do it yourself, or let me know and I'll try to find some time to do so.
 
 ## Contributing
