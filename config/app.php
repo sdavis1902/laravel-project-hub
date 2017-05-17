@@ -184,6 +184,7 @@ return [
 		TwigBridge\ServiceProvider::class,
 		Laravel\Scout\ScoutServiceProvider::class,
 		ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+		sdavis1902\LaravelControllerRoutes\LaravelControllerRoutesServiceProvider::class,
     ],
 
     /*
@@ -237,6 +238,7 @@ return [
 		'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 		'Lunanode' => sdavis1902\LunanodeApiPhp\Laravel\Lunanode::class,
 		'Twig' => TwigBridge\Facade\Twig::class,
+		'MoreRoute' => sdavis1902\LaravelControllerRoutes\Facades\MoreRoute::class,
     ],
 
 ];
