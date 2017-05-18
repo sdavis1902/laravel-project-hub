@@ -21,7 +21,7 @@ class AuthController extends Controller {
         ]);
 
         if ($v->fails()) {
-            return redirect('auth/login')->with('message', 'Login error.  Please make sure that your account login information is correct and type in a valid captcyha code.');
+            return redirect('auth/login')->with('message', 'Login error.  Please make sure that your account login information is correct.');
         }
 
         $credentials = [
@@ -57,7 +57,7 @@ class AuthController extends Controller {
     }
 
     public function postForgotPassword(Request $request){
-        $message = 'If the email address you provided was found in our system, then you should recieve a password reminder email shortly.';
+        $message = 'If the email address you provided was found in our system, then you should recieve a password reset email shortly.';
 
         if( !$request->input('email') ) return redirect( 'auth/login' )->with('message', $message);
         $user = User::where('email', '=', $request->input('email'))->first();
@@ -74,7 +74,7 @@ class AuthController extends Controller {
         ];
         Mail::send('emails.auth.password_reminder', $data, function($m) use ($user){
             $m->subject('Password Reset');
-            $m->from('s.davis1902+sdhub@gmail.com', 'SD Hub');
+            $m->from('admin@sdtechnology.ca', 'SD Hub');
             $m->to($user->email, $user->first_name.' '.$user->last_name);
         });
 
@@ -82,17 +82,15 @@ class AuthController extends Controller {
     }
 
     public function getForgotPassword(){
-        return view('auth.forgot-password');
+        return view('auth.forgot_password');
     }
 
-    public function postForgotPasswordConfirmation(Request $request){
+    public function postForgotPasswordConfirmation(Request $request, $userid, $code){
         if( !$request->has('userid') || !$request->has('code') ) return redirect('auth/login')->with('message', 'Your password could not be reset');
 
         $v = Validator::make($request->all(), [
-            'new_password'              => 'required|confirmed|password',
+            'new_password'              => 'required|confirmed|between:8,24',
             'new_password_confirmation' => 'required',
-        ],[
-            'new_password.password' => 'New Password must be at least 8 characters long containing an upper case character, a lower case character, a special character and a number'
         ]);
 
         if ($v->fails()) {
@@ -116,7 +114,7 @@ class AuthController extends Controller {
         $reminder = Reminder::exists( $user );
         if( !$reminder || $reminder->code != $code ) return redirect('auth/login')->with('message', 'Invalid Reminder URL');
 
-        return view('auth.forgot-password-confirmation', [
+        return view('auth.forgot_password_confirmation', [
             'code'  => $code,
             'userid'=> $user->id
         ]);

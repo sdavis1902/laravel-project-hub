@@ -44,7 +44,7 @@
 									<td>{{ project.status }}</td>
 									<td>{{ project.user.last_name }}, {{ project.user.first_name }}</td>
 									<td><a href="{{ url('project/dashboard/' ~ project.id) }}">Dashboard</a></td>
-									<td><a href="{{ url('task/' ~ project.id) }}">Tasks</a></td>
+									<td><a href="{{ url('task/list/' ~ project.id) }}">Tasks</a></td>
 								</tr>
 							{% endfor %}
 						</tbody>

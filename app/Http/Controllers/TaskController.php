@@ -21,7 +21,7 @@ use App\Models\UserBitbucketUsername;
 
 class TaskController extends Controller {
 
-	public function getIndex($project_id){
+	public function getList($project_id){
 		$project = Project::with('tasks')->find($project_id);
 		if( !$project ) return redirect('project')->withMessage('could not find tasks for given project');
 
