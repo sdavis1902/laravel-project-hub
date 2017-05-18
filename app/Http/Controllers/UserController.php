@@ -27,7 +27,7 @@ class UserController extends Controller {
             'first_name' => 'required',
             'last_name'  => 'required',
             'email'      => 'required|email',
-            'password'   => 'required'
+            'password'   => 'required|between:8,24|confirmed'
         ];
         $v = Validator::make($request->all(), $rules);
 
@@ -35,15 +35,16 @@ class UserController extends Controller {
             return redirect('user'. ( $id ? "/edit/$id" : 'create' ))->withErrors($v)->withInput();
         }
 
+	    $credentials = [
+			'email'    => $request->input('email'),
+			'password' => $request->input('password')
+		];
+
         if( $id ){
             $user = User::find($id);
             if( !$user ) return redirect('user')->withMessage('Could not find user with the provided id');
+			$user = Sentinel::update($user, $credentials);
         }else{
-	       $credentials = [
-		        'email'    => $request->input('email'),
-			    'password' => $request->input('password')
-			];
-
 			$user = Sentinel::registerAndActivate($credentials);
         }
 
@@ -56,7 +57,13 @@ class UserController extends Controller {
 	}
 
 	public function getEdit(Request $request, $id = 0){
+		$user = $id ? User::find($id) : null;
 
+		if($id && !$user) return redirect('user')->withMessage('Could not find user');
+
+		return view('user.edit', [
+			'user' => $user
+		]);
 	}
 
 	public function postCreate(Request $request){
