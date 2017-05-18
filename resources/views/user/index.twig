@@ -12,6 +12,7 @@
     <script src="{{ url('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('assets/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ url('assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.js') }}"></script>
+    <script src="{{ url('assets/plugins/bootbox.min.js') }}"></script>
     <script src="{{ url('assets/js/user.index.js') }}"></script>
 {% endblock %}
 
@@ -45,7 +46,7 @@
 									<td>{{ user.last_login.timezone(config_get('app.output_timezone')).toDayDateTimeString() }}</td>
 									<td>
 										<a href="{{ url('user/edit/' ~ user.id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-										<a href="{{ url('user/delete/' ~ user.id) }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></a>
+										<a href="{{ url('user/delete/' ~ user.id) }}" class="btn btn-danger btn-xs user-delete"><i class="fa fa-times"></i></a>
 									</td>
 								</tr>
 							{% endfor %}

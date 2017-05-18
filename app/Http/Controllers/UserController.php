@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Session;
 use Reminder;
 use Mail;
+use Illuminate\Validation\Rule;
 
 use App\Models\User;
 
@@ -26,13 +27,19 @@ class UserController extends Controller {
 		$rules = [
             'first_name' => 'required',
             'last_name'  => 'required',
-            'email'      => 'required|email',
-            'password'   => 'required|between:8,24|confirmed'
+			'email' => [
+                'required',
+				'email',
+                Rule::unique('users')->where(function($q) use ($id){
+                    if($id) $q->where('id', '<>', $id);
+                })
+            ],
+            'password'   => (!$id ? 'required|' : '') . 'between:8,24|confirmed'
         ];
         $v = Validator::make($request->all(), $rules);
 
         if( $v->fails() ){
-            return redirect('user'. ( $id ? "/edit/$id" : 'create' ))->withErrors($v)->withInput();
+            return redirect('user/'. ( $id ? "edit/$id" : 'create' ))->withErrors($v)->withInput();
         }
 
 	    $credentials = [
@@ -72,5 +79,14 @@ class UserController extends Controller {
 
 	public function getCreate(Request $request){
 		return $this->getEdit($request, 0);
+	}
+
+	public function getDelete($id){
+		$user = User::find($id);
+
+		if(!$user) return redirect('user')->withError('Could not find user');
+		$user->delete();
+
+		return redirect('user')->withMessage('User has been removed');
 	}
 }
