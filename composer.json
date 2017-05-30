@@ -12,7 +12,8 @@
         "rcrowe/twigbridge": "^0.9.4",
         "sdavis1902/laravel-controller-routes": "^1.0",
         "laravel/scout": "^3.0",
-        "teamtnt/laravel-scout-tntsearch-driver": "^3.0"
+        "teamtnt/laravel-scout-tntsearch-driver": "^3.0",
+        "algolia/algoliasearch-client-php": "^1.18"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -17,13 +17,6 @@ return [
 
     'driver' => env('SCOUT_DRIVER', 'tntsearch'),
 
-	'elasticsearch' => [
-        'index' => env('ELASTICSEARCH_INDEX', 'sdhub'),
-        'hosts' => [
-            env('ELASTICSEARCH_HOST', 'http://localhost'),
-        ],
-    ],
-
 	'tntsearch' => [
 		'storage'  => storage_path() . '/tntsearch', //place where the index files will be stored
 		'fuzziness' => env('TNTSEARCH_FUZZINESS', false),
