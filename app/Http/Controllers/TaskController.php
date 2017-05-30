@@ -56,8 +56,6 @@ class TaskController extends Controller {
 		$task->project_id = $request->input('project_id');
         $task->save();
 
-		Task::where('id', '=', $task->id)->searchable();
-
         $message = $id ? 'Task has been updated' : 'Task has been created';
         return redirect('project/dashboard/'.$task->project_id)->withMessage($message);
 	}
