@@ -183,7 +183,7 @@ return [
 		sdavis1902\LunanodeApiPhp\Laravel\LunanodeServiceProvider::class,
 		TwigBridge\ServiceProvider::class,
 		Laravel\Scout\ScoutServiceProvider::class,
-		ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+		TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
 		sdavis1902\LaravelControllerRoutes\LaravelControllerRoutesServiceProvider::class,
     ],
 
