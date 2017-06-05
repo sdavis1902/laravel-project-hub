@@ -1,5 +1,7 @@
 # Laravel Project Hub
 
+[Demo](https://project-hub-demo.sdtechnology.ca)
+
 I needed a system to track my projects and tasks I was working on.  I didn't need anything complex, just basic info, comments, status, attachments and not much more.  I also wanted a Kanban board.  I couldn't find anything that I liked, they where all either bloated, or expensive.  So, I decided to just build my own.
 
 It's using Laravel, as the title indicates, so you set it up like you would any Laravel site.
