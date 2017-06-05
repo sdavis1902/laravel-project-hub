@@ -27,6 +27,18 @@
 					</div>
 					<!-- /.col -->
 				</div>
+				{% if demo %}
+					<div class="row">
+						<div class="col-md-12">
+							Username: admin@example.org
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							Password: admin
+						</div>
+					</div>
+				{% endif %}
 			</form>
 		<a href="{{ url('auth/forgot-password') }}">I forgot my password</a><br>
 		</div>
