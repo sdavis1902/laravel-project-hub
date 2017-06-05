@@ -26,6 +26,7 @@ class GlobalViewShare
 
 		View::share('app_title', env('APP_TITLE'));
 		View::share('app_title_short', env('APP_TITLE_SHORT'));
+		View::share('demo', env('DEMO'));
 
         return $next($request);
     }
