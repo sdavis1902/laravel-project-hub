@@ -24,6 +24,8 @@ class UserController extends Controller {
 	}
 
 	public function postEdit(Request $request, $id = 0){
+		if( env('DEMO') ) return redirect('user')->withMessage('Updating users is disabled on demo site');
+
 		$rules = [
             'first_name' => 'required',
             'last_name'  => 'required',
@@ -82,6 +84,8 @@ class UserController extends Controller {
 	}
 
 	public function getDelete($id){
+		if( env('DEMO') ) return redirect('user')->withMessage('User delete is disabled on demo site');
+
 		$user = User::find($id);
 
 		if(!$user) return redirect('user')->withError('Could not find user');

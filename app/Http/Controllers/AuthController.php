@@ -57,6 +57,8 @@ class AuthController extends Controller {
     }
 
     public function postForgotPassword(Request $request){
+		if( env('DEMO') ) return redirect('auth/login')->withMessage('Password reset is disable on demo site');
+
         $message = 'If the email address you provided was found in our system, then you should recieve a password reset email shortly.';
 
         if( !$request->input('email') ) return redirect( 'auth/login' )->with('message', $message);
@@ -74,7 +76,7 @@ class AuthController extends Controller {
         ];
         Mail::send('emails.auth.password_reminder', $data, function($m) use ($user){
             $m->subject('Password Reset');
-            $m->from('admin@sdtechnology.ca', 'SD Hub');
+            $m->from('admin@sdtechnology.ca', env('APP_TITLE'));
             $m->to($user->email, $user->first_name.' '.$user->last_name);
         });
 
