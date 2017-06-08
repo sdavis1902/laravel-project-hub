@@ -1,0 +1,10 @@
+.base: &base
+  hostname: 172.81.179.236
+  user: ubuntu
+  become: root
+  multiplexing: false
+  repository: git@bitbucket.org:sdtechnology/actlap-actlap.git
+actlap:
+  <<: *base
+  stage: actlap-prod
+  deploy_path: /var/www/html/actlap/prod
