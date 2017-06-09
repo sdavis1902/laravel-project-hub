@@ -1,5 +1,11 @@
 {% extends 'layouts.admin_main' %}
 
-{% block content %}
 
+{% block pagejs %}
+    <script src="{{ url('assets/js/dashboard.index.js') }}"></script>
+{% endblock %}
+
+
+{% block content %}
+	<div class="notification"></div>
 {% endblock %}
