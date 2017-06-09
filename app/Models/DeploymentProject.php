@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Deployment extends Model {
+class DeploymentProject extends Model {
 
     use SoftDeletes;
 
@@ -13,5 +13,9 @@ class Deployment extends Model {
 
 	public function stages(){
 		return $this->hasMany('App\Models\DeploymentStage');
+	}
+
+	public function deployments(){
+		return $this->hasManyThrough('App\Models\Deployment', 'App\Models\DeploymentStage');
 	}
 }

@@ -38,5 +38,6 @@ MoreRoute::controller('auth', 'AuthController');
 		MoreRoute::controller('project', 'ProjectController');
 		MoreRoute::controller('task', 'TaskController');
 		MoreRoute::controller('user', 'UserController');
+		MoreRoute::controller('deployment', 'DeploymentController');
 	});
 });
