@@ -119,7 +119,7 @@ class DeploymentController extends Controller {
 		$dep->deployment_stage_id = $stage->id;
 		$dep->save();
 
-		dispatch(new RunDeployment($deb->id));
+		dispatch(new RunDeployment($deb))->onQueue('deployment');
 
 		return redirect('deployment/view/' . $dep->id);
 	}
