@@ -6,9 +6,9 @@ var HubApp = (function(){
 	}
 
 	function _pusherNewGitPush(){
-		var notificationsChannel = pusher.subscribe('git');
+		var notificationsChannel = pusher.subscribe('task');
 
-        notificationsChannel.bind('new_push', function(notification){
+        notificationsChannel.bind('new_comment', function(notification){
             var message = notification.message;
             var task_name = notification.task_name;
             var comment = notification.comment;

@@ -47,12 +47,6 @@ class HookController extends Controller {
 						$comment->task_id = $task->id;
 						$comment->comment = "$bbcomment\n<a target=\"_blank\" href=\"$bbcommiturl\">$bbcommithash</a>";
 						$comment->save();
-
-						PusherHelper::trigger('git', 'new_push', [
-							'message'   => 'New Git Push',
-							'task_name' => $task->name,
-							'comment'   => $comment->comment
-						]);
 					}
 				}
 			}
@@ -86,12 +80,6 @@ class HookController extends Controller {
 					$comment->task_id = $task->id;
 					$comment->comment = "$ghcomment\n<a target=\"_blank\" href=\"$ghcommiturl\">$ghcommithash</a>";
 					$comment->save();
-
-					PusherHelper::trigger('git', 'new_push', [
-						'message'   => 'New Git Push',
-						'task_name' => $task->name,
-						'comment'   => $comment->comment
-					]);
 				}
 			}
 		}

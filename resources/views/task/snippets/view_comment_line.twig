@@ -1,0 +1,14 @@
+<!-- chat item -->
+<div class="item">
+	<img src="https://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle">
+	<p class="message">
+		<a href="#" class="name">
+			<small class="text-muted pull-right">
+				<i class="fa fa-clock-o"></i> {{ comment.created_at.timezone(config_get('app.output_timezone')).toDayDateTimeString() }}
+			</small>
+			{{ comment.user.first_name }} {{ comment.user.last_name }}
+		</a>
+		{{ comment.comment|raw|nl2br }}
+	</p>
+</div>
+<!-- /.item -->
