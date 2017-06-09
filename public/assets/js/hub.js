@@ -10,6 +10,8 @@ var HubApp = (function(){
 
         notificationsChannel.bind('new_push', function(notification){
             var message = notification.message;
+            var task_name = notification.task_name;
+            var comment = notification.comment;
 			bootbox.alert(message + '<br />' + task_name + '<br />' + comment);
         });
 	}
