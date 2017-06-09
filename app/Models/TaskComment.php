@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
+use PusherHelper;
+
 class TaskComment extends Model {
 
     use SoftDeletes;

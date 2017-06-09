@@ -12,7 +12,7 @@ var TaskView = (function(){
 
         notificationsChannel.bind('new_comment', function(notification){
             var comment_html = notification.comment_html;
-			$('#chat-box').append(comment_html);
+			$('#chat-box').prepend(comment_html);
         });
 	}
 
