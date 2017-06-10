@@ -12,7 +12,7 @@ class DeploymentProject extends Model {
     protected $dates = ['deleted_at','update_at','created_at'];
 
 	public function stages(){
-		return $this->hasMany('App\Models\DeploymentStage');
+		return $this->hasMany('App\Models\DeploymentStage', 'deployment_project_id');
 	}
 
 	public function deployments(){

@@ -28,7 +28,8 @@ if(!$mystage){
 	die('no mystage');;
 }
 
-inventory('deployer/hosts/'.$mystage.'.yml');
+$filename = sys_get_temp_dir() . '/' . $mystage . '.yml';
+inventory($filename);
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');

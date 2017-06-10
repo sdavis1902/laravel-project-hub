@@ -25,7 +25,8 @@ class DeploymentController extends Controller {
 
 	public function postEditProject(Request $request, $id = 0){
 		$rules = [
-            'name' => 'required'
+            'name'       => 'required',
+            'repository' => 'required'
         ];
         $v = Validator::make($request->all(), $rules);
 
@@ -43,6 +44,7 @@ class DeploymentController extends Controller {
         $project->name        = $request->input('name');
         $project->status      = $request->input('status');
         $project->description = $request->input('description');
+        $project->repository  = $request->input('repository');
         $project->save();
 
         $message = 'Deployment Project has been ' . ( $id ? 'updated' : 'created' );
@@ -52,7 +54,7 @@ class DeploymentController extends Controller {
 	public function getEditProject($id = 0){
 		$project = $id ? DeploymentProject::find($id) : null;
 
-		return view('deployment.project_edit', [
+		return view('deployment.edit_project', [
 			'project' => $project,
 		]);
 	}
@@ -65,14 +67,18 @@ class DeploymentController extends Controller {
 		return $this->getEditProject();
 	}
 
-	public function postEditStage(Request $request, $id = 0){
+	public function postEditStage(Request $request, $project_id, $id = 0){
 		$rules = [
-            'name' => 'required'
+            'name'        => 'required',
+            'branch'      => 'required',
+            'host'        => 'required',
+            'host_user'   => 'required',
+            'deploy_path' => 'required'
         ];
         $v = Validator::make($request->all(), $rules);
 
         if( $v->fails() ){
-            return redirect('deployment/'. ( $id ? "edit-stage/$id" : 'create-stage' ))->withErrors($v)->withInput();
+            return redirect('deployment/'. ( $id ? "edit-stage/$project_id/$id" : "create-stage/$project_id" ))->withErrors($v)->withInput();
         }
 
         if( $id ){
@@ -80,36 +86,43 @@ class DeploymentController extends Controller {
             if( !$stage ) return redirect('deployment')->withMessage('Could not find deployment stage with the provided id');
         }else{
             $stage = new DeploymentStage;
+			$project = DeploymentProject::find($project_id);
+			if(!$project) return redirect('deployment')->withError('Invalid Deployment Project');
+			$stage->deployment_project_id = $project->id;
         }
 
         $stage->name                  = $request->input('name');
         $stage->status                = $request->input('status');
         $stage->description           = $request->input('description');
-        $stage->deployment_project_id = $request->input('deployment_project_id');
+        $stage->branch                = $request->input('branch');
+        $stage->host                  = $request->input('host');
+        $stage->host_user             = $request->input('host_user');
+        $stage->host_become           = $request->input('host_become');
+        $stage->deploy_path           = $request->input('deploy_path');
         $stage->save();
 
         $message = 'Deployment Stage has been ' . ( $id ? 'updated' : 'created' );
         return redirect('deployment')->withMessage($message);
 	}
 
-	public function getEditStage($id = 0){
+	public function getEditStage($project_id, $id = 0){
 		$stage = $id ? DeploymentStage::find($id) : null;
 
-		return view('deployment.stage_edit', [
+		return view('deployment.edit_stage', [
 			'stage' => $stage,
 		]);
 	}
 
-	public function postCreateStage(Request $request){
-		return $this->postEditStage($request);
+	public function postCreateStage(Request $request, $project_id){
+		return $this->postEditStage($request, $project_id);
 	}
 
-	public function getCreateStage(){
-		return $this->getEditStage();
+	public function getCreateStage($project_id){
+		return $this->getEditStage($project_id);
 	}
 
 	// stuff for actually running the deployment
-	public function getStartDeployment($stage_id){
+	public function getStart($stage_id){
 		$stage = DeploymentStage::find($stage_id);
 
 		if(!$stage || $stage->status != 'Active') return redirect('deployment')->withError('Invalid Deployment Stage');
@@ -117,20 +130,29 @@ class DeploymentController extends Controller {
 		$dep = new Deployment;
 		$dep->status = 'Queued';
 		$dep->deployment_stage_id = $stage->id;
+		$dep->logs = '';
 		$dep->save();
 
-		dispatch(new RunDeployment($deb))->onQueue('deployment');
+		dispatch((new RunDeployment($dep))->onQueue('deployment'));
 
 		return redirect('deployment/view/' . $dep->id);
 	}
 
-	public function getView($id){
-		$dep = Deployment::find($id);
+	public function getStageHistory($id){
+		$stage = DeploymentStage::find($id);
+		if(!$stage) return redirect('deployment')->withError('Invalid Stage');
 
+		return view('deployment.stage_history', [
+			'stage' => $stage
+		]);
+	}
+
+	public function getView($id){
+		$dep = Deployment::with('stage')->find($id);
 		if(!$dep) return redirect('deployment')->withError('Invalid Deployment');
 
 		return view('deployment.view', [
-			'deb' => $deb
+			'dep' => $dep
 		]);
 	}
 }

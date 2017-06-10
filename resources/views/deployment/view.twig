@@ -1,0 +1,35 @@
+{% extends 'layouts.admin_main' %}
+
+{% block pagejs %}
+	<script src="{{ url('assets/js/deployment.view.js') }}"></script>
+{% endblock %}
+
+{% block title %}
+	{{ dep.stage.project.name }} -  {{ dep.stage.name }}: {{ dep.created_at.timezone(config_get('app.output_timezone')).toDayDateTimeString() }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-6">
+			{% if dep.status == 'Queued' %}
+				<div class="box box-info box-solid" id="deployment-box">
+			{% elseif dep.status == 'Active' %}
+				<div class="box box-warning box-solid" id="deployment-box">
+			{% elseif dep.status == 'Complete' %}
+				<div class="box box-success box-solid" id="deployment-box">
+			{% elseif dep.status == 'Failed' %}
+				<div class="box box-danger box-solid" id="deployment-box">
+			{% endif %}
+				<div class="box-header with-border">
+					<h3 class="box-title" id="deployment-status">{{ dep.status }}</h3>
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body" id="deployment-logs">
+					{{ dep.logs|raw }}
+				</div>
+				<!-- /.box-body -->
+			</div>
+		</div>
+	</div>
+{% endblock %}
